@@ -1,14 +1,21 @@
 import { useRef, useEffect } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useReducedMotion } from '../../hooks/useReducedMotion'
 
 
 export default function Introduction() {
   const sectionRef = useRef(null)
   const wordsRef = useRef([])
+  const prefersReducedMotion = useReducedMotion()
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      if (prefersReducedMotion) {
+        gsap.set(wordsRef.current, { y: 0, opacity: 1 })
+        return
+      }
+
       gsap.fromTo(
         wordsRef.current,
         { y: 40, opacity: 0 },
@@ -27,7 +34,7 @@ export default function Introduction() {
     }, sectionRef)
 
     return () => ctx.revert()
-  }, [])
+  }, [prefersReducedMotion])
 
   const text = 'We believe in the beauty of simplicity. A perfectly extracted espresso. A croissant that shatters at first bite. A space where time slows down. That is the essence of Nuur.'
   const words = text.split(' ')

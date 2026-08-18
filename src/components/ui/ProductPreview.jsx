@@ -1,16 +1,31 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { useCart } from '../../context/CartContext'
+import { useReducedMotion } from '../../hooks/useReducedMotion'
 
 export default function ProductPreview({ product, onClose }) {
   const { addItem } = useCart()
   const overlayRef = useRef(null)
   const contentRef = useRef(null)
+  const prefersReducedMotion = useReducedMotion()
 
   useEffect(() => {
     if (!product) return
 
     document.body.style.overflow = 'hidden'
+
+    if (prefersReducedMotion) {
+      gsap.set(overlayRef.current, { opacity: 1 })
+      gsap.set(contentRef.current, { y: 0, opacity: 1, scale: 1 })
+
+      const handleEsc = (e) => { if (e.key === 'Escape') handleClose() }
+      window.addEventListener('keydown', handleEsc)
+
+      return () => {
+        document.body.style.overflow = ''
+        window.removeEventListener('keydown', handleEsc)
+      }
+    }
 
     const tl = gsap.timeline()
     tl.fromTo(overlayRef.current, { opacity: 0 }, { opacity: 1, duration: 0.3 })
@@ -29,9 +44,14 @@ export default function ProductPreview({ product, onClose }) {
       window.removeEventListener('keydown', handleEsc)
       tl.kill()
     }
-  }, [product])
+  }, [product, prefersReducedMotion])
 
   const handleClose = () => {
+    if (prefersReducedMotion) {
+      onClose()
+      return
+    }
+
     const tl = gsap.timeline({
       onComplete: onClose,
     })

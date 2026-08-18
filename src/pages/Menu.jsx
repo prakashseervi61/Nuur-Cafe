@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { menuData, categories } from '../data/menu'
 import ProductCard from '../components/ui/ProductCard'
 import ProductPreview from '../components/ui/ProductPreview'
+import { useReducedMotion } from '../hooks/useReducedMotion'
 
 
 export default function Menu() {
@@ -12,6 +13,7 @@ export default function Menu() {
   const gridRef = useRef(null)
   const headerRef = useRef(null)
   const categoryRef = useRef(null)
+  const prefersReducedMotion = useReducedMotion()
 
   const allCategories = ['All', ...categories]
 
@@ -20,18 +22,22 @@ export default function Menu() {
     : menuData.find((cat) => cat.category === activeCategory)?.products || []
 
   useEffect(() => {
+    if (prefersReducedMotion) {
+      gsap.set(headerRef.current?.children || [], { y: 0, opacity: 1 })
+      return
+    }
     gsap.fromTo(
       headerRef.current?.children || [],
       { y: 30, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: 'power3.out' }
+        { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: 'power3.out' }
     )
-  }, [])
+  }, [prefersReducedMotion])
 
   const handleCategoryChange = useCallback((category) => {
     if (category === activeCategory) return
 
     const cards = gridRef.current?.querySelectorAll('[data-card]')
-    if (cards?.length) {
+    if (cards?.length && !prefersReducedMotion) {
       gsap.to(cards, {
         opacity: 0,
         y: 20,
@@ -45,19 +51,23 @@ export default function Menu() {
     } else {
       setActiveCategory(category)
     }
-  }, [activeCategory])
+  }, [activeCategory, prefersReducedMotion])
 
   useEffect(() => {
     if (!gridRef.current) return
     const cards = gridRef.current.querySelectorAll('[data-card]')
     if (cards.length) {
+      if (prefersReducedMotion) {
+        gsap.set(cards, { opacity: 1, y: 0 })
+        return
+      }
       gsap.fromTo(
         cards,
         { opacity: 0, y: 30 },
         { opacity: 1, y: 0, duration: 0.5, stagger: 0.06, ease: 'power3.out' }
       )
     }
-  }, [activeCategory])
+  }, [activeCategory, prefersReducedMotion])
 
   return (
     <div className="min-h-screen bg-cream-50 pt-32 md:pt-40 pb-24 md:pb-32">

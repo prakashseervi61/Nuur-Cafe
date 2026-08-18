@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useReducedMotion } from '../../hooks/useReducedMotion'
 
 
 export default function Hero() {
@@ -9,9 +10,17 @@ export default function Hero() {
   const imageRef = useRef(null)
   const sublineRef = useRef(null)
   const ctaRef = useRef(null)
+  const prefersReducedMotion = useReducedMotion()
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      if (prefersReducedMotion) {
+        gsap.set(imageRef.current, { scale: 1, clipPath: 'inset(0 0 0% 0)' })
+        gsap.set(sublineRef.current, { y: 0, opacity: 1 })
+        gsap.set(ctaRef.current?.children || [], { y: 0, opacity: 1 })
+        return
+      }
+
       const tl = gsap.timeline({ delay: 0.2 })
 
       tl.fromTo(
@@ -45,7 +54,7 @@ export default function Hero() {
     }, sectionRef)
 
     return () => ctx.revert()
-  }, [])
+  }, [prefersReducedMotion])
 
   return (
     <section
@@ -67,6 +76,8 @@ export default function Hero() {
         {/* Top scrim so navbar text stays readable */}
         <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-brown-950/50 to-transparent" />
       </div>
+
+      <h1 className="sr-only">Nuur — Craft Coffeehouse, Amsterdam</h1>
 
       <div className="relative z-10 h-full flex flex-col justify-end pb-24 md:pb-28 lg:pb-32 px-6 md:px-12 lg:px-20">
         <div className="max-w-7xl mx-auto w-full">

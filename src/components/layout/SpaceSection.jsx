@@ -1,14 +1,21 @@
 import { useRef, useEffect } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useReducedMotion } from '../../hooks/useReducedMotion'
 
 
 export default function SpaceSection() {
   const sectionRef = useRef(null)
   const imagesRef = useRef([])
+  const prefersReducedMotion = useReducedMotion()
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      if (prefersReducedMotion) {
+        gsap.set(imagesRef.current, { clipPath: 'inset(0 0 0% 0)', scale: 1 })
+        return
+      }
+
       imagesRef.current.forEach((img) => {
         if (!img) return
         gsap.fromTo(
@@ -29,7 +36,7 @@ export default function SpaceSection() {
     }, sectionRef)
 
     return () => ctx.revert()
-  }, [])
+  }, [prefersReducedMotion])
 
   return (
     <section ref={sectionRef} className="py-24 md:py-32 bg-cream-50 overflow-hidden">

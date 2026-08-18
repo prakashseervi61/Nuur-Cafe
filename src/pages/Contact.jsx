@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { cafe } from '../data/cafe'
+import { useReducedMotion } from '../hooks/useReducedMotion'
 
 
 export default function Contact() {
@@ -10,9 +11,17 @@ export default function Contact() {
   const headerRef = useRef(null)
   const formRef = useRef(null)
   const infoRef = useRef(null)
+  const prefersReducedMotion = useReducedMotion()
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      if (prefersReducedMotion) {
+        gsap.set(headerRef.current?.children || [], { y: 0, opacity: 1 })
+        gsap.set(formRef.current, { y: 0, opacity: 1 })
+        gsap.set(infoRef.current?.children || [], { y: 0, opacity: 1 })
+        return
+      }
+
       gsap.fromTo(
         headerRef.current?.children || [],
         { y: 30, opacity: 0 },
@@ -31,11 +40,12 @@ export default function Contact() {
     })
 
     return () => ctx.revert()
-  }, [])
+  }, [prefersReducedMotion])
 
   const handleSubmit = (e) => {
     e.preventDefault()
     setSubmitted(true)
+    if (prefersReducedMotion) return
     gsap.fromTo(
       '.success-message',
       { y: 20, opacity: 0 },

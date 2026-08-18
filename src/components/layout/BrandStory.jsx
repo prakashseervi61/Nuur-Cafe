@@ -1,15 +1,23 @@
 import { useRef, useEffect } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useReducedMotion } from '../../hooks/useReducedMotion'
 
 
 export default function BrandStory() {
   const sectionRef = useRef(null)
   const imageRef = useRef(null)
   const textBlocksRef = useRef([])
+  const prefersReducedMotion = useReducedMotion()
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      if (prefersReducedMotion) {
+        gsap.set(imageRef.current, { yPercent: 0 })
+        gsap.set(textBlocksRef.current, { y: 0, opacity: 1 })
+        return
+      }
+
       gsap.fromTo(
         imageRef.current,
         { yPercent: 15 },
@@ -43,7 +51,7 @@ export default function BrandStory() {
     }, sectionRef)
 
     return () => ctx.revert()
-  }, [])
+  }, [prefersReducedMotion])
 
   return (
     <section ref={sectionRef} className="py-24 md:py-32 bg-cream-50">

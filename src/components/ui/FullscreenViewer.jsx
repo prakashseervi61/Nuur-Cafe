@@ -1,13 +1,32 @@
 import { useEffect, useRef, useCallback } from 'react'
 import { gsap } from 'gsap'
+import { useReducedMotion } from '../../hooks/useReducedMotion'
 
-export default function FullscreenViewer({ image, onClose, onNext, onPrev, hasNext, hasPrev }) {
+export default function FullscreenViewer({ image, onClose, onNext, onPrev, hasNext, hasPrev, currentIndex, totalCount }) {
   const overlayRef = useRef(null)
   const contentRef = useRef(null)
+  const prefersReducedMotion = useReducedMotion()
 
   useEffect(() => {
     if (!image) return
     document.body.style.overflow = 'hidden'
+
+    if (prefersReducedMotion) {
+      gsap.set(overlayRef.current, { opacity: 1 })
+      gsap.set(contentRef.current, { scale: 1, opacity: 1 })
+
+      const handleKey = (e) => {
+        if (e.key === 'Escape') handleClose()
+        if (e.key === 'ArrowRight' && hasNext) onNext()
+        if (e.key === 'ArrowLeft' && hasPrev) onPrev()
+      }
+      window.addEventListener('keydown', handleKey)
+
+      return () => {
+        document.body.style.overflow = ''
+        window.removeEventListener('keydown', handleKey)
+      }
+    }
 
     const tl = gsap.timeline()
     tl.fromTo(overlayRef.current, { opacity: 0 }, { opacity: 1, duration: 0.3 })
@@ -30,9 +49,14 @@ export default function FullscreenViewer({ image, onClose, onNext, onPrev, hasNe
       window.removeEventListener('keydown', handleKey)
       tl.kill()
     }
-  }, [image])
+  }, [image, prefersReducedMotion])
 
   const handleClose = useCallback(() => {
+    if (prefersReducedMotion) {
+      onClose()
+      return
+    }
+
     const tl = gsap.timeline({ onComplete: onClose })
     tl.to(contentRef.current, { scale: 0.95, opacity: 0, duration: 0.25, ease: 'power2.in' })
       .to(overlayRef.current, { opacity: 0, duration: 0.2 }, '-=0.1')
@@ -91,10 +115,19 @@ export default function FullscreenViewer({ image, onClose, onNext, onPrev, hasNe
             className="w-full h-full object-contain rounded-lg"
           />
           <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-brown-950/80 to-transparent rounded-b-lg">
-            <p className="text-cream-100 font-display text-lg font-medium">{image.caption}</p>
-            {image.category && (
-              <span className="text-cream-400 text-sm">{image.category}</span>
-            )}
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-cream-100 font-display text-lg font-medium">{image.caption}</p>
+                {image.category && (
+                  <span className="text-cream-400 text-sm">{image.category}</span>
+                )}
+              </div>
+              {currentIndex != null && totalCount != null && (
+                <span className="text-cream-400 text-sm font-medium">
+                  {currentIndex + 1} / {totalCount}
+                </span>
+              )}
+            </div>
           </div>
         </div>
       </div>

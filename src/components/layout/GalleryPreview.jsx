@@ -3,17 +3,24 @@ import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { galleryImages } from '../../data/gallery'
+import { useReducedMotion } from '../../hooks/useReducedMotion'
 
 
 export default function GalleryPreview() {
   const sectionRef = useRef(null)
   const scrollRef = useRef(null)
   const itemsRef = useRef([])
+  const prefersReducedMotion = useReducedMotion()
 
   const previewImages = galleryImages.slice(0, 6)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      if (prefersReducedMotion) {
+        gsap.set(itemsRef.current, { clipPath: 'inset(0 0 0% 0)' })
+        return
+      }
+
       itemsRef.current.forEach((item) => {
         if (!item) return
         gsap.fromTo(
@@ -33,7 +40,7 @@ export default function GalleryPreview() {
     }, sectionRef)
 
     return () => ctx.revert()
-  }, [])
+  }, [prefersReducedMotion])
 
   return (
     <section ref={sectionRef} className="py-24 md:py-32 bg-cream-50 overflow-hidden">

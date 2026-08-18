@@ -3,14 +3,21 @@ import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { cafe } from '../../data/cafe'
+import { useReducedMotion } from '../../hooks/useReducedMotion'
 
 
 export default function VisitUs() {
   const sectionRef = useRef(null)
   const contentRef = useRef(null)
+  const prefersReducedMotion = useReducedMotion()
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      if (prefersReducedMotion) {
+        gsap.set(contentRef.current?.children || [], { y: 0, opacity: 1 })
+        return
+      }
+
       gsap.fromTo(
         contentRef.current?.children || [],
         { y: 40, opacity: 0 },
@@ -29,7 +36,7 @@ export default function VisitUs() {
     }, sectionRef)
 
     return () => ctx.revert()
-  }, [])
+  }, [prefersReducedMotion])
 
   return (
     <section ref={sectionRef} className="py-24 md:py-32 bg-cream-50">

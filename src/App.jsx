@@ -26,7 +26,9 @@ function ScrollToTop() {
 }
 
 function AppContent() {
-  const [preloaderShown, setPreloaderShown] = useState(true)
+  const [preloaderShown, setPreloaderShown] = useState(() => {
+    return !sessionStorage.getItem('nuur-preloader-seen')
+  })
   const location = useLocation()
   useSmoothScroll()
 
@@ -36,6 +38,7 @@ function AppContent() {
   }, [])
 
   const handlePreloaderExit = () => {
+    sessionStorage.setItem('nuur-preloader-seen', '1')
     setPreloaderShown(false)
     document.body.classList.remove('is-loading')
   }
@@ -47,6 +50,12 @@ function AppContent() {
   return (
     <div className="min-h-screen bg-cream-50 text-brown-900 font-body">
       <ScrollToTop />
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:px-6 focus:py-3 focus:rounded-full focus:bg-brown-900 focus:text-cream-50 focus:text-sm focus:font-medium focus:shadow-lg focus:outline-none"
+      >
+        Skip to main content
+      </a>
       <Navbar />
       <CartDrawer />
       <PageTransition>

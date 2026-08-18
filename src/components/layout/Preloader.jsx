@@ -1,12 +1,20 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
+import { useReducedMotion } from '../../hooks/useReducedMotion'
 
 export default function Preloader({ onExit }) {
   const containerRef = useRef(null)
   const textRef = useRef(null)
   const lineRef = useRef(null)
+  const prefersReducedMotion = useReducedMotion()
 
   useEffect(() => {
+    if (prefersReducedMotion) {
+      document.body.style.overflow = ''
+      onExit()
+      return
+    }
+
     document.body.style.overflow = 'hidden'
 
     const tl = gsap.timeline({
@@ -47,7 +55,7 @@ export default function Preloader({ onExit }) {
       tl.kill()
       document.body.style.overflow = ''
     }
-  }, [onExit])
+  }, [onExit, prefersReducedMotion])
 
   return (
     <div

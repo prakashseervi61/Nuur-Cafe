@@ -62,7 +62,6 @@ export function CartProvider({ children }) {
 
   const addItem = useCallback((product) => {
     dispatch({ type: 'ADD_ITEM', payload: product })
-    dispatch({ type: 'TOGGLE_CART' })
   }, [])
 
   const removeItem = useCallback((id) => {

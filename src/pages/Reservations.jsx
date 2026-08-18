@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 import { gsap } from 'gsap'
 import { timeSlots, guestOptions, getAvailableSlots } from '../data/reservation'
 import { cafe } from '../data/cafe'
+import { useReducedMotion } from '../hooks/useReducedMotion'
 
 const steps = ['Date & Guests', 'Time', 'Details', 'Confirm']
 
@@ -19,15 +20,20 @@ export default function Reservations() {
   })
   const [submitted, setSubmitted] = useState(false)
   const stepRef = useRef(null)
+  const prefersReducedMotion = useReducedMotion()
 
   useEffect(() => {
     if (!stepRef.current) return
+    if (prefersReducedMotion) {
+      gsap.set(stepRef.current, { x: 0, opacity: 1 })
+      return
+    }
     gsap.fromTo(
       stepRef.current,
       { x: 40, opacity: 0 },
       { x: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }
     )
-  }, [step])
+  }, [step, prefersReducedMotion])
 
   const updateForm = (field, value) => {
     setForm((prev) => ({ ...prev, [field]: value }))

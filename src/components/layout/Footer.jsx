@@ -3,15 +3,23 @@ import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { cafe, navigation } from '../../data/cafe'
+import { useReducedMotion } from '../../hooks/useReducedMotion'
 
 
 export default function Footer() {
   const sectionRef = useRef(null)
   const headingRef = useRef(null)
   const contentRef = useRef(null)
+  const prefersReducedMotion = useReducedMotion()
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      if (prefersReducedMotion) {
+        gsap.set(headingRef.current, { y: 0, opacity: 1 })
+        gsap.set(contentRef.current?.children || [], { y: 0, opacity: 1 })
+        return
+      }
+
       gsap.fromTo(
         headingRef.current,
         { y: 60, opacity: 0 },
@@ -45,7 +53,7 @@ export default function Footer() {
     }, sectionRef)
 
     return () => ctx.revert()
-  }, [])
+  }, [prefersReducedMotion])
 
   return (
     <footer
@@ -131,6 +139,9 @@ export default function Footer() {
                   </a>
                   <a href={cafe.social.facebook} target="_blank" rel="noopener noreferrer" className="text-cream-400 hover:text-cream-50 transition-colors">
                     Facebook
+                  </a>
+                  <a href={cafe.social.tiktok} target="_blank" rel="noopener noreferrer" className="text-cream-400 hover:text-cream-50 transition-colors">
+                    TikTok
                   </a>
                 </div>
               </div>

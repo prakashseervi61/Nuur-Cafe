@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { useCart } from '../../context/CartContext'
+import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { Link } from 'react-router-dom'
 
 export default function CartDrawer() {
@@ -8,9 +9,21 @@ export default function CartDrawer() {
   const drawerRef = useRef(null)
   const overlayRef = useRef(null)
   const itemsRef = useRef([])
+  const prefersReducedMotion = useReducedMotion()
 
   useEffect(() => {
     if (!drawerRef.current || !overlayRef.current) return
+
+    if (prefersReducedMotion) {
+      if (isOpen) {
+        gsap.set(overlayRef.current, { opacity: 1 })
+        gsap.set(drawerRef.current, { x: '0%' })
+      } else {
+        gsap.set(drawerRef.current, { x: '100%' })
+        gsap.set(overlayRef.current, { opacity: 0 })
+      }
+      return
+    }
 
     if (isOpen) {
       gsap.to(overlayRef.current, { opacity: 1, duration: 0.3, ease: 'power2.out' })
@@ -23,7 +36,7 @@ export default function CartDrawer() {
       gsap.to(drawerRef.current, { x: '100%', duration: 0.4, ease: 'power3.in' })
       gsap.to(overlayRef.current, { opacity: 0, duration: 0.3, delay: 0.1 })
     }
-  }, [isOpen])
+  }, [isOpen, prefersReducedMotion])
 
   useEffect(() => {
     const handleEsc = (e) => {

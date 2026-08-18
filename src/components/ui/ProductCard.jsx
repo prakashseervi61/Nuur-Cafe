@@ -1,14 +1,20 @@
 import { useRef, useEffect } from 'react'
 import { gsap } from 'gsap'
 import { useCart } from '../../context/CartContext'
+import { useReducedMotion } from '../../hooks/useReducedMotion'
 
 export default function ProductCard({ product, index = 0, onPreview }) {
   const { addItem } = useCart()
   const cardRef = useRef(null)
   const addedRef = useRef(false)
+  const prefersReducedMotion = useReducedMotion()
 
   useEffect(() => {
     if (!cardRef.current) return
+    if (prefersReducedMotion) {
+      gsap.set(cardRef.current, { y: 0, opacity: 1 })
+      return
+    }
     gsap.fromTo(
       cardRef.current,
       { y: 40, opacity: 0 },
@@ -20,13 +26,13 @@ export default function ProductCard({ product, index = 0, onPreview }) {
         ease: 'power3.out',
       }
     )
-  }, [index])
+  }, [index, prefersReducedMotion])
 
   const handleAddToCart = (e) => {
     e.stopPropagation()
     addItem(product)
 
-    if (cardRef.current && !addedRef.current) {
+    if (!prefersReducedMotion && cardRef.current && !addedRef.current) {
       addedRef.current = true
       gsap.fromTo(
         cardRef.current,
@@ -46,11 +52,8 @@ export default function ProductCard({ product, index = 0, onPreview }) {
   return (
     <div
       ref={cardRef}
-      className="group relative rounded-2xl overflow-hidden bg-white shadow-sm hover:shadow-lg transition-shadow duration-500 cursor-pointer opacity-0"
+      className="group relative rounded-2xl overflow-hidden bg-white shadow-sm hover:shadow-lg transition-shadow duration-500 opacity-0"
       onClick={() => onPreview?.(product)}
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onPreview?.(product) } }}
       aria-label={`${product.name} — €${product.price.toFixed(2)}`}
     >
       <div className="aspect-[4/3] overflow-hidden relative">

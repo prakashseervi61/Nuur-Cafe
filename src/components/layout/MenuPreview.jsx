@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { menuData } from '../../data/menu'
+import { useReducedMotion } from '../../hooks/useReducedMotion'
 
 
 export default function MenuPreview() {
   const sectionRef = useRef(null)
   const cardsRef = useRef([])
+  const prefersReducedMotion = useReducedMotion()
 
   const previewItems = [
     menuData[0].products[3],
@@ -20,6 +22,11 @@ export default function MenuPreview() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      if (prefersReducedMotion) {
+        gsap.set(cardsRef.current, { y: 0, opacity: 1, scale: 1 })
+        return
+      }
+
       gsap.fromTo(
         cardsRef.current,
         { y: 60, opacity: 0, scale: 0.95 },
@@ -39,7 +46,7 @@ export default function MenuPreview() {
     }, sectionRef)
 
     return () => ctx.revert()
-  }, [])
+  }, [prefersReducedMotion])
 
   return (
     <section ref={sectionRef} className="py-24 md:py-32 bg-brown-50">

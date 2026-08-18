@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { galleryImages, galleryCategories } from '../data/gallery'
 import FullscreenViewer from '../components/ui/FullscreenViewer'
+import { useReducedMotion } from '../hooks/useReducedMotion'
 
 
 export default function Gallery() {
@@ -11,6 +12,7 @@ export default function Gallery() {
   const headerRef = useRef(null)
   const gridRef = useRef(null)
   const itemsRef = useRef([])
+  const prefersReducedMotion = useReducedMotion()
 
   const allCategories = ['All', ...galleryCategories]
 
@@ -19,16 +21,24 @@ export default function Gallery() {
     : galleryImages.filter((img) => img.category === activeCategory)
 
   useEffect(() => {
+    if (prefersReducedMotion) {
+      gsap.set(headerRef.current?.children || [], { y: 0, opacity: 1 })
+      return
+    }
     gsap.fromTo(
       headerRef.current?.children || [],
       { y: 30, opacity: 0 },
       { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: 'power3.out' }
     )
-  }, [])
+  }, [prefersReducedMotion])
 
   useEffect(() => {
     if (!gridRef.current) return
     const cards = gridRef.current.querySelectorAll('[data-gallery-item]')
+    if (prefersReducedMotion) {
+      gsap.set(cards, { clipPath: 'inset(0 0 0% 0)', opacity: 1 })
+      return
+    }
     gsap.fromTo(
       cards,
       { clipPath: 'inset(0 0 100% 0)', opacity: 0 },
@@ -40,7 +50,7 @@ export default function Gallery() {
         ease: 'power4.out',
       }
     )
-  }, [activeCategory])
+  }, [activeCategory, prefersReducedMotion])
 
   const handleNext = useCallback(() => {
     if (!selectedImage) return
@@ -132,6 +142,8 @@ export default function Gallery() {
         onPrev={handlePrev}
         hasNext={currentIdx < filteredImages.length - 1}
         hasPrev={currentIdx > 0}
+        currentIndex={currentIdx}
+        totalCount={filteredImages.length}
       />
     </div>
   )

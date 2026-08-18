@@ -2,15 +2,28 @@ import { useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { navigation, cafe } from '../../data/cafe'
+import { useReducedMotion } from '../../hooks/useReducedMotion'
 
 export default function MenuOverlay({ isOpen, onClose }) {
   const overlayRef = useRef(null)
   const menuItemsRef = useRef([])
   const location = useLocation()
   const hasAnimated = useRef(false)
+  const prefersReducedMotion = useReducedMotion()
 
   useEffect(() => {
     if (!overlayRef.current) return
+
+    if (prefersReducedMotion) {
+      if (isOpen) {
+        gsap.set(overlayRef.current, { visibility: 'visible', clipPath: 'inset(0 0 0% 0)' })
+        gsap.set(menuItemsRef.current, { y: 0, opacity: 1 })
+      } else if (hasAnimated.current) {
+        gsap.set(overlayRef.current, { visibility: 'hidden' })
+      }
+      hasAnimated.current = true
+      return
+    }
 
     if (isOpen) {
       const tl = gsap.timeline()
@@ -52,7 +65,7 @@ export default function MenuOverlay({ isOpen, onClose }) {
     }
 
     hasAnimated.current = true
-  }, [isOpen])
+  }, [isOpen, prefersReducedMotion])
 
   useEffect(() => {
     const handleEsc = (e) => {

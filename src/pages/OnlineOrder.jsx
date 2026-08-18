@@ -5,6 +5,7 @@ import { menuData, categories } from '../data/menu'
 import { useCart } from '../context/CartContext'
 import ProductCard from '../components/ui/ProductCard'
 import ProductPreview from '../components/ui/ProductPreview'
+import { useReducedMotion } from '../hooks/useReducedMotion'
 
 
 export default function OnlineOrder() {
@@ -15,6 +16,7 @@ export default function OnlineOrder() {
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
   const headerRef = useRef(null)
   const gridRef = useRef(null)
+  const prefersReducedMotion = useReducedMotion()
 
   const allCategories = ['All', ...categories]
 
@@ -23,31 +25,53 @@ export default function OnlineOrder() {
     : menuData.find((cat) => cat.category === activeCategory)?.products || []
 
   useEffect(() => {
+    if (prefersReducedMotion) {
+      gsap.set(headerRef.current?.children || [], { y: 0, opacity: 1 })
+      return
+    }
     gsap.fromTo(
       headerRef.current?.children || [],
       { y: 30, opacity: 0 },
       { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: 'power3.out' }
     )
-  }, [])
+  }, [prefersReducedMotion])
 
   useEffect(() => {
     if (!gridRef.current) return
     const cards = gridRef.current.querySelectorAll('[data-card]')
+    if (prefersReducedMotion) {
+      gsap.set(cards, { opacity: 1, y: 0 })
+      return
+    }
     gsap.fromTo(
       cards,
       { opacity: 0, y: 25 },
       { opacity: 1, y: 0, duration: 0.45, stagger: 0.05, ease: 'power3.out' }
     )
-  }, [activeCategory])
+  }, [activeCategory, prefersReducedMotion])
 
   const [checkoutStep, setCheckoutStep] = useState(null)
+  const [pickupName, setPickupName] = useState('')
+  const [pickupPhone, setPickupPhone] = useState('')
+  const [pickupTime, setPickupTime] = useState('ASAP (10–15 min)')
+  const [pickupErrors, setPickupErrors] = useState({})
+
+  const validateCheckout = () => {
+    const errors = {}
+    if (!pickupName.trim()) errors.name = 'Name is required'
+    if (!pickupPhone.trim()) errors.phone = 'Phone number is required'
+    setPickupErrors(errors)
+    return Object.keys(errors).length === 0
+  }
 
   const handleCheckout = () => {
     setCheckoutStep('details')
   }
 
   const handlePlaceOrder = () => {
+    if (!validateCheckout()) return
     setCheckoutStep('confirmed')
+    if (prefersReducedMotion) return
     gsap.fromTo(
       '.order-confirmed',
       { scale: 0.9, opacity: 0 },
@@ -144,22 +168,45 @@ export default function OnlineOrder() {
             <div className="rounded-3xl bg-white p-8 shadow-sm mb-6">
               <h3 className="font-display text-lg font-semibold text-brown-900 mb-4">Pickup Details</h3>
               <div className="space-y-4">
-                <input
-                  type="text"
-                  placeholder="Your name"
-                  className="w-full px-4 py-3.5 rounded-xl bg-brown-50 border border-brown-200 text-brown-900 text-body-md focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:border-gold-500 transition-all"
-                />
-                <input
-                  type="tel"
-                  placeholder="Phone number (for ready notification)"
-                  className="w-full px-4 py-3.5 rounded-xl bg-brown-50 border border-brown-200 text-brown-900 text-body-md focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:border-gold-500 transition-all"
-                />
-                <select className="w-full px-4 py-3.5 rounded-xl bg-brown-50 border border-brown-200 text-brown-900 text-body-md focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:border-gold-500 transition-all">
-                  <option>When should it be ready?</option>
-                  <option>ASAP (10–15 min)</option>
-                  <option>In 30 minutes</option>
-                  <option>In 1 hour</option>
-                </select>
+                <div>
+                  <label htmlFor="pickup-name" className="block text-sm font-medium text-brown-700 mb-1.5">Your name</label>
+                  <input
+                    id="pickup-name"
+                    type="text"
+                    placeholder="Your name"
+                    required
+                    value={pickupName}
+                    onChange={(e) => setPickupName(e.target.value)}
+                    className={`w-full px-4 py-3.5 rounded-xl bg-brown-50 border text-brown-900 text-body-md focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:border-gold-500 transition-all ${pickupErrors.name ? 'border-red-400' : 'border-brown-200'}`}
+                  />
+                  {pickupErrors.name && <p className="mt-1 text-sm text-red-600">{pickupErrors.name}</p>}
+                </div>
+                <div>
+                  <label htmlFor="pickup-phone" className="block text-sm font-medium text-brown-700 mb-1.5">Phone number</label>
+                  <input
+                    id="pickup-phone"
+                    type="tel"
+                    placeholder="For ready notification"
+                    required
+                    value={pickupPhone}
+                    onChange={(e) => setPickupPhone(e.target.value)}
+                    className={`w-full px-4 py-3.5 rounded-xl bg-brown-50 border text-brown-900 text-body-md focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:border-gold-500 transition-all ${pickupErrors.phone ? 'border-red-400' : 'border-brown-200'}`}
+                  />
+                  {pickupErrors.phone && <p className="mt-1 text-sm text-red-600">{pickupErrors.phone}</p>}
+                </div>
+                <div>
+                  <label htmlFor="pickup-time" className="block text-sm font-medium text-brown-700 mb-1.5">When should it be ready?</label>
+                  <select
+                    id="pickup-time"
+                    value={pickupTime}
+                    onChange={(e) => setPickupTime(e.target.value)}
+                    className="w-full px-4 py-3.5 rounded-xl bg-brown-50 border border-brown-200 text-brown-900 text-body-md focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:border-gold-500 transition-all"
+                  >
+                    <option>ASAP (10–15 min)</option>
+                    <option>In 30 minutes</option>
+                    <option>In 1 hour</option>
+                  </select>
+                </div>
               </div>
             </div>
 

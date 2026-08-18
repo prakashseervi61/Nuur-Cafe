@@ -3,15 +3,23 @@ import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { bestSellers } from '../../data/menu'
+import { useReducedMotion } from '../../hooks/useReducedMotion'
 
 
 export default function BestSeller() {
   const sectionRef = useRef(null)
   const imageRef = useRef(null)
   const contentRef = useRef(null)
+  const prefersReducedMotion = useReducedMotion()
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      if (prefersReducedMotion) {
+        gsap.set(imageRef.current, { clipPath: 'inset(0 0 0% 0)', scale: 1 })
+        gsap.set(contentRef.current?.children || [], { y: 0, opacity: 1 })
+        return
+      }
+
       gsap.fromTo(
         imageRef.current,
         { clipPath: 'inset(0 0 100% 0)', scale: 1.15 },
@@ -45,7 +53,7 @@ export default function BestSeller() {
     }, sectionRef)
 
     return () => ctx.revert()
-  }, [])
+  }, [prefersReducedMotion])
 
   const featured = bestSellers[0]
 

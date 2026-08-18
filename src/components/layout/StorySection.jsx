@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useReducedMotion } from '../../hooks/useReducedMotion'
 
 
 const timeline = [
@@ -39,9 +40,21 @@ const timeline = [
 export default function StorySection() {
   const sectionRef = useRef(null)
   const itemsRef = useRef([])
+  const prefersReducedMotion = useReducedMotion()
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      if (prefersReducedMotion) {
+        itemsRef.current.forEach((item) => {
+          if (!item) return
+          const image = item.querySelector('.story-image')
+          const content = item.querySelector('.story-content')
+          gsap.set(image, { clipPath: 'inset(0 0 0% 0)', scale: 1 })
+          gsap.set(content?.children || [], { y: 0, opacity: 1 })
+        })
+        return
+      }
+
       itemsRef.current.forEach((item, i) => {
         if (!item) return
 
@@ -82,7 +95,7 @@ export default function StorySection() {
     }, sectionRef)
 
     return () => ctx.revert()
-  }, [])
+  }, [prefersReducedMotion])
 
   return (
     <section ref={sectionRef} className="py-24 md:py-32 bg-cream-50">

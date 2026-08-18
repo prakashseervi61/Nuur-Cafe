@@ -1,15 +1,23 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useReducedMotion } from '../../hooks/useReducedMotion'
 
 
 export default function AboutHero() {
   const sectionRef = useRef(null)
   const imageRef = useRef(null)
   const textRef = useRef(null)
+  const prefersReducedMotion = useReducedMotion()
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      if (prefersReducedMotion) {
+        gsap.set(imageRef.current, { scale: 1, clipPath: 'inset(0 0 0% 0)' })
+        gsap.set(textRef.current?.children || [], { y: 0, opacity: 1 })
+        return
+      }
+
       const tl = gsap.timeline({ delay: 0.3 })
 
       tl.fromTo(
@@ -36,7 +44,7 @@ export default function AboutHero() {
     }, sectionRef)
 
     return () => ctx.revert()
-  }, [])
+  }, [prefersReducedMotion])
 
   return (
     <section ref={sectionRef} className="relative h-screen min-h-[600px] overflow-hidden bg-brown-950">
