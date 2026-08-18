@@ -1,0 +1,13 @@
+- generic [ref=f3e3]:
+  - generic [ref=f3e4]: "[plugin:vite:import-analysis] Failed to resolve import \"../data/gallery\" from \"src/components/layout/GalleryGrid.jsx\". Does the file exist?"
+  - generic [ref=f3e5]: D:/journey to web development/cafe website/src/components/layout/GalleryGrid.jsx:2:30
+  - generic [ref=f3e6]: "1 | import React from \"react\"; 2 | import { galleryImages } from \"../data/gallery\"; | ^ 3 | var _jsxFileName = \"D:/journey to web development/cafe website/src/components/layout/GalleryGrid.jsx\"; 4 | import { jsxDEV as _jsxDEV } from \"react/jsx-dev-runtime\";"
+  - generic [ref=f3e7]: at TransformPluginContext._formatLog (file:///D:/journey%20to%20web%20development/cafe%20website/node_modules/vite/dist/node/chunks/node.js:31066:39) at TransformPluginContext.error (file:///D:/journey%20to%20web%20development/cafe%20website/node_modules/vite/dist/node/chunks/node.js:31063:14) at normalizeUrl (file:///D:/journey%20to%20web%20development/cafe%20website/node_modules/vite/dist/node/chunks/node.js:28008:18) at async file:///D:/journey%20to%20web%20development/cafe%20website/node_modules/vite/dist/node/chunks/node.js:28076:30 at async Promise.all (index 1) at async TransformPluginContext.transform (file:///D:/journey%20to%20web%20development/cafe%20website/node_modules/vite/dist/node/chunks/node.js:28044:4) at async EnvironmentPluginContainer.transform (file:///D:/journey%20to%20web%20development/cafe%20website/node_modules/vite/dist/node/chunks/node.js:30851:14) at async loadAndTransform (file:///D:/journey%20to%20web%20development/cafe%20website/node_modules/vite/dist/node/chunks/node.js:20619:26)
+  - generic [ref=f3e8]:
+    - text: Click outside, press Esc key, or fix the code to dismiss.You can also disable this overlay by setting
+    - code [ref=f3e9]: server.hmr.overlay
+    - text: to
+    - code [ref=f3e10]: "false"
+    - text: in
+    - code [ref=f3e11]: vite.config.js
+    - text: .

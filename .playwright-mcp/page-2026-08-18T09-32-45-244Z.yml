@@ -1,0 +1,377 @@
+- generic [ref=f17e6]:
+  - navigation "Main navigation" [ref=f17e7]:
+    - generic [ref=f17e9]:
+      - link "Nuur — Home" [ref=f17e10] [cursor=pointer]:
+        - /url: /
+        - text: NUUR
+      - generic [ref=f17e11]:
+        - button "Cart with 1 items" [ref=f17e12] [cursor=pointer]:
+          - generic [ref=f17e16]: "1"
+        - button "Open menu" [ref=f17e17] [cursor=pointer]
+  - dialog "Shopping cart" [ref=f17e22]:
+    - generic [ref=f17e23]:
+      - generic [ref=f17e24]:
+        - heading "Your Order" [level=2] [ref=f17e25]
+        - paragraph [ref=f17e26]: 1 item
+      - button "Close cart" [ref=f17e27] [cursor=pointer]
+    - generic [ref=f17e33]:
+      - img "Espresso" [ref=f17e35]
+      - generic [ref=f17e36]:
+        - heading "Espresso" [level=3] [ref=f17e37]
+        - paragraph [ref=f17e38]: €3.25
+        - generic [ref=f17e39]:
+          - button "Decrease quantity of Espresso" [ref=f17e40] [cursor=pointer]: −
+          - generic [ref=f17e41]: "1"
+          - button "Increase quantity of Espresso" [ref=f17e42] [cursor=pointer]: +
+      - generic [ref=f17e43]:
+        - button "Remove Espresso from cart" [ref=f17e44] [cursor=pointer]
+        - generic [ref=f17e48]: €3.25
+    - generic [ref=f17e49]:
+      - generic [ref=f17e50]:
+        - generic [ref=f17e51]: Total
+        - generic [ref=f17e52]: €3.25
+      - link "Go to Checkout" [ref=f17e53] [cursor=pointer]:
+        - /url: /online-order
+  - generic [ref=f17e56]:
+    - generic [ref=f17e57]:
+      - generic [ref=f17e58]: Order Online
+      - heading "Skip the queue." [level=1] [ref=f17e59]
+      - paragraph [ref=f17e60]: Order ahead and pick up when it's ready. Same quality, zero wait.
+    - tablist [ref=f17e61]:
+      - tab "All" [selected] [ref=f17e62] [cursor=pointer]
+      - tab "Coffee" [ref=f17e63] [cursor=pointer]
+      - tab "Breakfast" [ref=f17e64] [cursor=pointer]
+      - tab "Pastries & Desserts" [ref=f17e65] [cursor=pointer]
+      - tab "Sandwiches & Light Meals" [ref=f17e66] [cursor=pointer]
+      - tab "Signature Drinks" [ref=f17e67] [cursor=pointer]
+      - tab "Seasonal Specials" [ref=f17e68] [cursor=pointer]
+    - generic [ref=f17e69]:
+      - button "Espresso — €3.25" [ref=f17e71] [cursor=pointer]:
+        - generic [ref=f17e72]:
+          - img "Espresso" [ref=f17e73]
+          - generic [ref=f17e74]: Classic
+        - generic [ref=f17e75]:
+          - generic [ref=f17e76]:
+            - heading "Espresso" [level=3] [ref=f17e77]
+            - generic [ref=f17e78]: €3.25
+          - paragraph [ref=f17e79]: Rich and intense single-origin shot, served in a traditional demitasse.
+          - button "Add Espresso to cart" [active] [ref=f17e80]: Add to Order
+      - button "Americano — €3.75" [ref=f17e82] [cursor=pointer]:
+        - img "Americano" [ref=f17e84]
+        - generic [ref=f17e85]:
+          - generic [ref=f17e86]:
+            - heading "Americano" [level=3] [ref=f17e87]
+            - generic [ref=f17e88]: €3.75
+          - paragraph [ref=f17e89]: Espresso diluted with hot water for a clean, bold cup.
+          - button "Add Americano to cart" [ref=f17e90]: Add to Order
+      - button "Cappuccino — €4.25" [ref=f17e92] [cursor=pointer]:
+        - generic [ref=f17e93]:
+          - img "Cappuccino" [ref=f17e94]
+          - generic [ref=f17e95]: Popular
+        - generic [ref=f17e96]:
+          - generic [ref=f17e97]:
+            - heading "Cappuccino" [level=3] [ref=f17e98]
+            - generic [ref=f17e99]: €4.25
+          - paragraph [ref=f17e100]: Equal parts espresso, steamed milk, and velvety microfoam.
+          - button "Add Cappuccino to cart" [ref=f17e101]: Add to Order
+      - button "Flat White — €4.50" [ref=f17e103] [cursor=pointer]:
+        - generic [ref=f17e104]:
+          - img "Flat White" [ref=f17e105]
+          - generic [ref=f17e106]: Popular
+        - generic [ref=f17e107]:
+          - generic [ref=f17e108]:
+            - heading "Flat White" [level=3] [ref=f17e109]
+            - generic [ref=f17e110]: €4.50
+          - paragraph [ref=f17e111]: Double ristretto with silky steamed milk. Bold and balanced.
+          - button "Add Flat White to cart" [ref=f17e112]: Add to Order
+      - button "Pour Over — €5.00" [ref=f17e114] [cursor=pointer]:
+        - generic [ref=f17e115]:
+          - img "Pour Over" [ref=f17e116]
+          - generic [ref=f17e117]: Craft
+        - generic [ref=f17e118]:
+          - generic [ref=f17e119]:
+            - heading "Pour Over" [level=3] [ref=f17e120]
+            - generic [ref=f17e121]: €5.00
+          - paragraph [ref=f17e122]: Hand-poured single-origin, brewed to order. Ask about today's selection.
+          - button "Add Pour Over to cart" [ref=f17e123]: Add to Order
+      - button "Cold Brew — €4.75" [ref=f17e125] [cursor=pointer]:
+        - img "Cold Brew" [ref=f17e127]
+        - generic [ref=f17e128]:
+          - generic [ref=f17e129]:
+            - heading "Cold Brew" [level=3] [ref=f17e130]
+            - generic [ref=f17e131]: €4.75
+          - paragraph [ref=f17e132]: Steeped for 18 hours. Smooth, low acidity, naturally sweet.
+          - button "Add Cold Brew to cart" [ref=f17e133]: Add to Order
+      - button "Avocado Toast — €12.50" [ref=f17e135] [cursor=pointer]:
+        - generic [ref=f17e136]:
+          - img "Avocado Toast" [ref=f17e137]
+          - generic [ref=f17e138]: Popular
+        - generic [ref=f17e139]:
+          - generic [ref=f17e140]:
+            - heading "Avocado Toast" [level=3] [ref=f17e141]
+            - generic [ref=f17e142]: €12.50
+          - paragraph [ref=f17e143]: Sourdough, smashed avocado, cherry tomatoes, poached egg, microgreens.
+          - button "Add Avocado Toast to cart" [ref=f17e144]: Add to Order
+      - button "Granola Bowl — €10.00" [ref=f17e146] [cursor=pointer]:
+        - img "Granola Bowl" [ref=f17e148]
+        - generic [ref=f17e149]:
+          - generic [ref=f17e150]:
+            - heading "Granola Bowl" [level=3] [ref=f17e151]
+            - generic [ref=f17e152]: €10.00
+          - paragraph [ref=f17e153]: House-made granola, Greek yogurt, seasonal berries, local honey.
+          - button "Add Granola Bowl to cart" [ref=f17e154]: Add to Order
+      - button "Ricotta Pancakes — €13.00" [ref=f17e156] [cursor=pointer]:
+        - img "Ricotta Pancakes" [ref=f17e158]
+        - generic [ref=f17e159]:
+          - generic [ref=f17e160]:
+            - heading "Ricotta Pancakes" [level=3] [ref=f17e161]
+            - generic [ref=f17e162]: €13.00
+          - paragraph [ref=f17e163]: Fluffy ricotta pancakes with maple syrup and fresh fruit.
+          - button "Add Ricotta Pancakes to cart" [ref=f17e164]: Add to Order
+      - button "Shakshuka — €13.50" [ref=f17e166] [cursor=pointer]:
+        - generic [ref=f17e167]:
+          - img "Shakshuka" [ref=f17e168]
+          - generic [ref=f17e169]: Chef's Pick
+        - generic [ref=f17e170]:
+          - generic [ref=f17e171]:
+            - heading "Shakshuka" [level=3] [ref=f17e172]
+            - generic [ref=f17e173]: €13.50
+          - paragraph [ref=f17e174]: Baked eggs in spiced tomato sauce with feta, herbs, and sourdough.
+          - button "Add Shakshuka to cart" [ref=f17e175]: Add to Order
+      - button "Butter Croissant — €4.25" [ref=f17e177] [cursor=pointer]:
+        - generic [ref=f17e178]:
+          - img "Butter Croissant" [ref=f17e179]
+          - generic [ref=f17e180]: Popular
+        - generic [ref=f17e181]:
+          - generic [ref=f17e182]:
+            - heading "Butter Croissant" [level=3] [ref=f17e183]
+            - generic [ref=f17e184]: €4.25
+          - paragraph [ref=f17e185]: Classic French laminated pastry. 72-hour fermentation, French butter.
+          - button "Add Butter Croissant to cart" [ref=f17e186]: Add to Order
+      - button "Almond Croissant — €5.50" [ref=f17e188] [cursor=pointer]:
+        - generic [ref=f17e189]:
+          - img "Almond Croissant" [ref=f17e190]
+          - generic [ref=f17e191]: Signature
+        - generic [ref=f17e192]:
+          - generic [ref=f17e193]:
+            - heading "Almond Croissant" [level=3] [ref=f17e194]
+            - generic [ref=f17e195]: €5.50
+          - paragraph [ref=f17e196]: Twice-baked with frangipane, toasted almonds, powdered sugar.
+          - button "Add Almond Croissant to cart" [ref=f17e197]: Add to Order
+      - button "Pain au Chocolat — €4.75" [ref=f17e199] [cursor=pointer]:
+        - img "Pain au Chocolat" [ref=f17e201]
+        - generic [ref=f17e202]:
+          - generic [ref=f17e203]:
+            - heading "Pain au Chocolat" [level=3] [ref=f17e204]
+            - generic [ref=f17e205]: €4.75
+          - paragraph [ref=f17e206]: Dark chocolate wrapped in buttery, flaky pastry.
+          - button "Add Pain au Chocolat to cart" [ref=f17e207]: Add to Order
+      - button "Tiramisu — €8.50" [ref=f17e209] [cursor=pointer]:
+        - generic [ref=f17e210]:
+          - img "Tiramisu" [ref=f17e211]
+          - generic [ref=f17e212]: Chef's Pick
+        - generic [ref=f17e213]:
+          - generic [ref=f17e214]:
+            - heading "Tiramisu" [level=3] [ref=f17e215]
+            - generic [ref=f17e216]: €8.50
+          - paragraph [ref=f17e217]: Espresso-soaked ladyfingers, mascarpone, cocoa. Made in-house daily.
+          - button "Add Tiramisu to cart" [ref=f17e218]: Add to Order
+      - button "Seasonal Tart — €7.50" [ref=f17e220] [cursor=pointer]:
+        - generic [ref=f17e221]:
+          - img "Seasonal Tart" [ref=f17e222]
+          - generic [ref=f17e223]: Seasonal
+        - generic [ref=f17e224]:
+          - generic [ref=f17e225]:
+            - heading "Seasonal Tart" [level=3] [ref=f17e226]
+            - generic [ref=f17e227]: €7.50
+          - paragraph [ref=f17e228]: Ask your server about today's fresh fruit tart.
+          - button "Add Seasonal Tart to cart" [ref=f17e229]: Add to Order
+      - button "Croque Monsieur — €13.50" [ref=f17e231] [cursor=pointer]:
+        - generic [ref=f17e232]:
+          - img "Croque Monsieur" [ref=f17e233]
+          - generic [ref=f17e234]: Popular
+        - generic [ref=f17e235]:
+          - generic [ref=f17e236]:
+            - heading "Croque Monsieur" [level=3] [ref=f17e237]
+            - generic [ref=f17e238]: €13.50
+          - paragraph [ref=f17e239]: Gruyère, ham, béchamel on sourdough. Grilled until golden.
+          - button "Add Croque Monsieur to cart" [ref=f17e240]: Add to Order
+      - button "Grilled Cheese & Tomato Soup — €11.50" [ref=f17e242] [cursor=pointer]:
+        - img "Grilled Cheese & Tomato Soup" [ref=f17e244]
+        - generic [ref=f17e245]:
+          - generic [ref=f17e246]:
+            - heading "Grilled Cheese & Tomato Soup" [level=3] [ref=f17e247]
+            - generic [ref=f17e248]: €11.50
+          - paragraph [ref=f17e249]: Three-cheese grilled sourdough with creamy tomato soup.
+          - button "Add Grilled Cheese & Tomato Soup to cart" [ref=f17e250]: Add to Order
+      - button "Niçoise Salad — €14.50" [ref=f17e252] [cursor=pointer]:
+        - img "Niçoise Salad" [ref=f17e254]
+        - generic [ref=f17e255]:
+          - generic [ref=f17e256]:
+            - heading "Niçoise Salad" [level=3] [ref=f17e257]
+            - generic [ref=f17e258]: €14.50
+          - paragraph [ref=f17e259]: Seared tuna, green beans, olives, egg, new potatoes, anchovy dressing.
+          - button "Add Niçoise Salad to cart" [ref=f17e260]: Add to Order
+      - button "Soup of the Day — €9.00" [ref=f17e262] [cursor=pointer]:
+        - generic [ref=f17e263]:
+          - img "Soup of the Day" [ref=f17e264]
+          - generic [ref=f17e265]: Seasonal
+        - generic [ref=f17e266]:
+          - generic [ref=f17e267]:
+            - heading "Soup of the Day" [level=3] [ref=f17e268]
+            - generic [ref=f17e269]: €9.00
+          - paragraph [ref=f17e270]: Made fresh daily. Served with crusty sourdough. Ask your server.
+          - button "Add Soup of the Day to cart" [ref=f17e271]: Add to Order
+      - button "Nuur Signature — €5.75" [ref=f17e273] [cursor=pointer]:
+        - generic [ref=f17e274]:
+          - img "Nuur Signature" [ref=f17e275]
+          - generic [ref=f17e276]: Signature
+        - generic [ref=f17e277]:
+          - generic [ref=f17e278]:
+            - heading "Nuur Signature" [level=3] [ref=f17e279]
+            - generic [ref=f17e280]: €5.75
+          - paragraph [ref=f17e281]: Double espresso, oat milk, house-made vanilla bean syrup, sea salt.
+          - button "Add Nuur Signature to cart" [ref=f17e282]: Add to Order
+      - button "Lavender Latte — €5.50" [ref=f17e284] [cursor=pointer]:
+        - generic [ref=f17e285]:
+          - img "Lavender Latte" [ref=f17e286]
+          - generic [ref=f17e287]: Signature
+        - generic [ref=f17e288]:
+          - generic [ref=f17e289]:
+            - heading "Lavender Latte" [level=3] [ref=f17e290]
+            - generic [ref=f17e291]: €5.50
+          - paragraph [ref=f17e292]: Espresso with steamed milk and house-made lavender syrup.
+          - button "Add Lavender Latte to cart" [ref=f17e293]: Add to Order
+      - button "Matcha Ceremony — €5.50" [ref=f17e295] [cursor=pointer]:
+        - img "Matcha Ceremony" [ref=f17e297]
+        - generic [ref=f17e298]:
+          - generic [ref=f17e299]:
+            - heading "Matcha Ceremony" [level=3] [ref=f17e300]
+            - generic [ref=f17e301]: €5.50
+          - paragraph [ref=f17e302]: Ceremonial-grade matcha, whisked to order, served with oat or whole milk.
+          - button "Add Matcha Ceremony to cart" [ref=f17e303]: Add to Order
+      - button "Golden Turmeric — €5.25" [ref=f17e305] [cursor=pointer]:
+        - img "Golden Turmeric" [ref=f17e307]
+        - generic [ref=f17e308]:
+          - generic [ref=f17e309]:
+            - heading "Golden Turmeric" [level=3] [ref=f17e310]
+            - generic [ref=f17e311]: €5.25
+          - paragraph [ref=f17e312]: Turmeric, ginger, cinnamon, black pepper, oat milk, honey.
+          - button "Add Golden Turmeric to cart" [ref=f17e313]: Add to Order
+      - button "Affogato — €6.00" [ref=f17e315] [cursor=pointer]:
+        - generic [ref=f17e316]:
+          - img "Affogato" [ref=f17e317]
+          - generic [ref=f17e318]: Popular
+        - generic [ref=f17e319]:
+          - generic [ref=f17e320]:
+            - heading "Affogato" [level=3] [ref=f17e321]
+            - generic [ref=f17e322]: €6.00
+          - paragraph [ref=f17e323]: A scoop of house-made vanilla gelato drowned in hot espresso.
+          - button "Add Affogato to cart" [ref=f17e324]: Add to Order
+      - button "Spiced Apple Cider — €5.50" [ref=f17e326] [cursor=pointer]:
+        - generic [ref=f17e327]:
+          - img "Spiced Apple Cider" [ref=f17e328]
+          - generic [ref=f17e329]: Autumn
+        - generic [ref=f17e330]:
+          - generic [ref=f17e331]:
+            - heading "Spiced Apple Cider" [level=3] [ref=f17e332]
+            - generic [ref=f17e333]: €5.50
+          - paragraph [ref=f17e334]: Warm apple cider with cinnamon, clove, and star anise.
+          - button "Add Spiced Apple Cider to cart" [ref=f17e335]: Add to Order
+      - button "Pumpkin Spice Latte — €6.00" [ref=f17e337] [cursor=pointer]:
+        - generic [ref=f17e338]:
+          - img "Pumpkin Spice Latte" [ref=f17e339]
+          - generic [ref=f17e340]: Autumn
+        - generic [ref=f17e341]:
+          - generic [ref=f17e342]:
+            - heading "Pumpkin Spice Latte" [level=3] [ref=f17e343]
+            - generic [ref=f17e344]: €6.00
+          - paragraph [ref=f17e345]: Real pumpkin purée, espresso, steamed milk, house spice blend.
+          - button "Add Pumpkin Spice Latte to cart" [ref=f17e346]: Add to Order
+      - button "Chestnut Praline Croissant — €6.50" [ref=f17e348] [cursor=pointer]:
+        - generic [ref=f17e349]:
+          - img "Chestnut Praline Croissant" [ref=f17e350]
+          - generic [ref=f17e351]: Seasonal
+        - generic [ref=f17e352]:
+          - generic [ref=f17e353]:
+            - heading "Chestnut Praline Croissant" [level=3] [ref=f17e354]
+            - generic [ref=f17e355]: €6.50
+          - paragraph [ref=f17e356]: Seasonal croissant filled with chestnut praline cream.
+          - button "Add Chestnut Praline Croissant to cart" [ref=f17e357]: Add to Order
+      - button "Peppermint Mocha — €5.75" [ref=f17e359] [cursor=pointer]:
+        - generic [ref=f17e360]:
+          - img "Peppermint Mocha" [ref=f17e361]
+          - generic [ref=f17e362]: Winter
+        - generic [ref=f17e363]:
+          - generic [ref=f17e364]:
+            - heading "Peppermint Mocha" [level=3] [ref=f17e365]
+            - generic [ref=f17e366]: €5.75
+          - paragraph [ref=f17e367]: Dark chocolate, espresso, steamed milk, house peppermint.
+          - button "Add Peppermint Mocha to cart" [ref=f17e368]: Add to Order
+    - button "1 View Order — €3.25" [ref=f17e370] [cursor=pointer]:
+      - generic [ref=f17e371]: "1"
+      - text: View Order — €3.25
+  - contentinfo [ref=f17e372]:
+    - generic [ref=f17e373]:
+      - generic [ref=f17e374]:
+        - paragraph [ref=f17e375]: Visit Us
+        - heading "Your table is waiting." [level=2] [ref=f17e376]
+        - link "Make a Reservation" [ref=f17e377] [cursor=pointer]:
+          - /url: /reservations
+      - generic [ref=f17e380]:
+        - generic [ref=f17e381]:
+          - heading "NUUR" [level=3] [ref=f17e382]
+          - paragraph [ref=f17e383]: Craft coffeehouse in the heart of Amsterdam. Pure ingredients, intentional preparation, unforgettable moments.
+        - generic [ref=f17e384]:
+          - heading "Navigate" [level=4] [ref=f17e385]
+          - navigation [ref=f17e386]:
+            - link "Home" [ref=f17e387] [cursor=pointer]:
+              - /url: /
+            - link "Menu" [ref=f17e388] [cursor=pointer]:
+              - /url: /menu
+            - link "About" [ref=f17e389] [cursor=pointer]:
+              - /url: /about
+            - link "Gallery" [ref=f17e390] [cursor=pointer]:
+              - /url: /gallery
+            - link "Contact" [ref=f17e391] [cursor=pointer]:
+              - /url: /contact
+            - link "Reservations" [ref=f17e392] [cursor=pointer]:
+              - /url: /reservations
+            - link "Order" [ref=f17e393] [cursor=pointer]:
+              - /url: /online-order
+        - generic [ref=f17e394]:
+          - heading "Visit" [level=4] [ref=f17e395]
+          - generic [ref=f17e396]:
+            - generic [ref=f17e397]:
+              - paragraph [ref=f17e398]: Address
+              - paragraph [ref=f17e399]: Prinsengracht 42
+              - paragraph [ref=f17e400]: 1015 CW Amsterdam
+            - generic [ref=f17e401]:
+              - paragraph [ref=f17e402]: Hours
+              - paragraph [ref=f17e403]: "Mon — Fri: 7:00 — 19:00"
+              - paragraph [ref=f17e404]: "Sat — Sun: 8:00 — 20:00"
+        - generic [ref=f17e405]:
+          - heading "Connect" [level=4] [ref=f17e406]
+          - generic [ref=f17e407]:
+            - generic [ref=f17e408]:
+              - paragraph [ref=f17e409]: Contact
+              - link "+31 (0)20 845 2190" [ref=f17e410] [cursor=pointer]:
+                - /url: tel:+31 (0)20 845 2190
+              - link "hallo@nuur.cafe" [ref=f17e411] [cursor=pointer]:
+                - /url: mailto:hallo@nuur.cafe
+            - generic [ref=f17e412]:
+              - paragraph [ref=f17e413]: Follow
+              - generic [ref=f17e414]:
+                - generic [ref=f17e415]: Instagram
+                - generic [ref=f17e416]: Facebook
+      - generic [ref=f17e417]:
+        - paragraph [ref=f17e418]: © 2026 Nuur. All rights reserved.
+        - generic [ref=f17e419]: Puur genieten
+  - navigation "Mobile navigation" [ref=f17e421]:
+    - generic [ref=f17e422]:
+      - link "Home" [ref=f17e423] [cursor=pointer]:
+        - /url: /
+      - link "Menu" [ref=f17e429] [cursor=pointer]:
+        - /url: /menu
+      - link "Order" [ref=f17e434] [cursor=pointer]:
+        - /url: /online-order

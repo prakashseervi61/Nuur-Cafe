@@ -1,0 +1,88 @@
+export const galleryCategories = ['Interior', 'Coffee', 'Food', 'People']
+
+export const galleryImages = [
+  {
+    id: 1,
+    src: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=1200&h=800&fit=crop',
+    alt: 'Morning light through the cafe windows',
+    caption: 'Morning light',
+    category: 'Interior',
+  },
+  {
+    id: 2,
+    src: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1200&h=800&fit=crop',
+    alt: 'Latte art being poured',
+    caption: 'The craft',
+    category: 'Coffee',
+  },
+  {
+    id: 3,
+    src: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=1200&h=800&fit=crop',
+    alt: 'Cafe interior with warm lighting',
+    caption: 'Our space',
+    category: 'Interior',
+  },
+  {
+    id: 4,
+    src: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1200&h=800&fit=crop',
+    alt: 'Coffee cup detail',
+    caption: 'Every detail matters',
+    category: 'Coffee',
+  },
+  {
+    id: 5,
+    src: 'https://images.unsplash.com/photo-1555507036-ab1f4038024a?w=1200&h=800&fit=crop',
+    alt: 'Fresh croissants from the oven',
+    caption: 'Baked fresh daily',
+    category: 'Food',
+  },
+  {
+    id: 6,
+    src: 'https://images.unsplash.com/photo-1559305616-3f99cd43e353?w=1200&h=800&fit=crop',
+    alt: 'Barista at work',
+    caption: 'Dedicated artisans',
+    category: 'People',
+  },
+  {
+    id: 7,
+    src: 'https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=1200&h=800&fit=crop',
+    alt: 'Espresso machine close-up',
+    caption: 'Precision equipment',
+    category: 'Coffee',
+  },
+  {
+    id: 8,
+    src: 'https://images.unsplash.com/photo-1507226983735-a83d43e3b1f3?w=1200&h=800&fit=crop',
+    alt: 'Cafe terrace on a sunny day',
+    caption: 'Prinsengracht terrace',
+    category: 'Interior',
+  },
+  {
+    id: 9,
+    src: 'https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=1200&h=800&fit=crop',
+    alt: 'Coffee beans being roasted',
+    caption: 'Locally roasted',
+    category: 'Coffee',
+  },
+  {
+    id: 10,
+    src: 'https://images.unsplash.com/photo-1470324161839-ce2bb6f9d58b?w=1200&h=800&fit=crop',
+    alt: 'Pastry display case',
+    caption: 'Morning selection',
+    category: 'Food',
+  },
+  {
+    id: 11,
+    src: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=1200&h=800&fit=crop',
+    alt: 'Steaming coffee cup on wooden table',
+    caption: 'Quiet mornings',
+    category: 'Coffee',
+  },
+  {
+    id: 12,
+    src: 'https://images.unsplash.com/photo-1559925393-8be0ec4767c8?w=1200&h=800&fit=crop',
+    alt: 'Cafe ambiance at golden hour',
+    caption: 'Golden hour',
+    category: 'Interior',
+  },
+]
