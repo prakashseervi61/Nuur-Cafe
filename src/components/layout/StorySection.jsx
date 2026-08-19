@@ -98,7 +98,7 @@ export default function StorySection() {
   }, [prefersReducedMotion])
 
   return (
-    <section ref={sectionRef} className="py-24 md:py-32 bg-cream-50">
+    <section ref={sectionRef} className="py-16 md:py-20 bg-cream-50">
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
         <div className="text-center mb-20">
           <span className="label-lg text-gold-600 block mb-3">Timeline</span>

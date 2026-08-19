@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { CartProvider } from './context/CartContext'
+import { ToastProvider } from './context/ToastContext'
 import useSmoothScroll from './hooks/useSmoothScroll'
 import Preloader from './components/layout/Preloader'
 import Navbar from './components/navigation/Navbar'
@@ -80,7 +81,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <CartProvider>
-        <AppContent />
+        <ToastProvider>
+          <AppContent />
+        </ToastProvider>
       </CartProvider>
     </BrowserRouter>
   )

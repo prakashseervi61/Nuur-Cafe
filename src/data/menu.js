@@ -264,7 +264,7 @@ export const menuData = [
         description: 'Warm apple cider with cinnamon, clove, and star anise.',
         ingredients: ['Apple cider', 'Cinnamon', 'Clove', 'Star anise'],
         price: 5.50,
-        image: 'https://images.unsplash.com/photo-1543007630-9710e4a00a20?w=600&h=800&fit=crop',
+        image: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=600&h=800&fit=crop',
         tag: 'Autumn',
       },
       {
@@ -282,7 +282,7 @@ export const menuData = [
         description: 'Seasonal croissant filled with chestnut praline cream.',
         ingredients: ['Croissant', 'Chestnut praline', 'Cream'],
         price: 6.50,
-        image: 'https://images.unsplash.com/photo-1509365390695-33aee754301f?w=600&h=800&fit=crop',
+        image: 'https://images.unsplash.com/photo-1623334044303-241021148842?w=600&h=800&fit=crop',
         tag: 'Seasonal',
       },
       {
@@ -291,7 +291,7 @@ export const menuData = [
         description: 'Dark chocolate, espresso, steamed milk, house peppermint.',
         ingredients: ['Espresso', 'Dark chocolate', 'Steamed milk', 'Peppermint'],
         price: 5.75,
-        image: 'https://images.unsplash.com/photo-1517576225810-38a41e3e288c?w=600&h=800&fit=crop',
+        image: 'https://images.unsplash.com/photo-1578314675249-a6910f80cc4e?w=600&h=800&fit=crop',
         tag: 'Winter',
       },
     ],
