@@ -1,4 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
+import { useEffect, useRef } from 'react'
+import { gsap } from 'gsap'
+import { useReducedMotion } from '../../hooks/useReducedMotion'
 
 const items = [
   {
@@ -35,20 +38,57 @@ const items = [
 
 export default function BottomNav() {
   const location = useLocation()
+  const navRef = useRef(null)
+  const itemRefs = useRef([])
+  const prefersReducedMotion = useReducedMotion()
+
+  useEffect(() => {
+    if (!navRef.current) return
+    const ctx = gsap.context(() => {
+      const itemsToAnimate = itemRefs.current.filter(Boolean)
+      if (prefersReducedMotion) {
+        gsap.set(navRef.current, { y: 0, opacity: 1 })
+        gsap.set(itemsToAnimate, { y: 0, opacity: 1 })
+        return
+      }
+
+      gsap.fromTo(
+        navRef.current,
+        { y: 80, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.7, delay: 0.15, ease: 'power3.out' }
+      )
+      gsap.fromTo(
+        itemsToAnimate,
+        { y: 18, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.45, delay: 0.35, stagger: 0.08, ease: 'back.out(1.5)' }
+      )
+    }, navRef)
+
+    return () => ctx.revert()
+  }, [prefersReducedMotion])
+
+  useEffect(() => {
+    if (prefersReducedMotion) return
+    const activeItem = itemRefs.current[items.findIndex((item) => item.path === location.pathname)]
+    if (activeItem) {
+      gsap.fromTo(activeItem, { scale: 0.92 }, { scale: 1, duration: 0.4, ease: 'back.out(2)' })
+    }
+  }, [location.pathname, prefersReducedMotion])
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-[55] lg:hidden bg-brown-950/95 backdrop-blur-md border-t border-brown-800/50" aria-label="Mobile navigation">
-      <div className="flex items-center justify-around px-4 py-2">
-        {items.map((item) => {
+    <nav ref={navRef} className="fixed bottom-3 left-3 right-3 z-[55] md:hidden overflow-hidden rounded-2xl border border-[#8c5437]/40 bg-[#1a120b]/95 shadow-2xl shadow-[#110d08]/30 backdrop-blur-xl" aria-label="Mobile navigation">
+      <div className="flex items-center justify-around px-2 py-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))]">
+        {items.map((item, index) => {
           const isActive = location.pathname === item.path
           return (
             <Link
               key={item.path}
+              ref={(element) => { itemRefs.current[index] = element }}
               to={item.path}
-              className={`flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all duration-300 ${
+              className={`flex min-w-20 flex-col items-center gap-1 rounded-xl px-4 py-2 transition-all duration-300 ${
                 isActive
-                  ? 'text-gold-400'
-                  : 'text-cream-500 hover:text-cream-200'
+                  ? 'bg-[#f5c96b]/10 text-[#f5c96b]'
+                  : 'text-[#b9a896] hover:bg-[#fdf8f3]/5 hover:text-[#f7efe5]'
               }`}
               aria-label={item.label}
               aria-current={isActive ? 'page' : undefined}
