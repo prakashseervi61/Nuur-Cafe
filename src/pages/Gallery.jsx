@@ -5,13 +5,29 @@ import { galleryImages, galleryCategories } from '../data/gallery'
 import FullscreenViewer from '../components/ui/FullscreenViewer'
 import { useReducedMotion } from '../hooks/useReducedMotion'
 
+gsap.registerPlugin(ScrollTrigger)
+
+// Assign layout spans to create visual rhythm
+const layoutPattern = [
+  'col-span-2 row-span-2', // large
+  'col-span-1 row-span-1', // small
+  'col-span-1 row-span-1', // small
+  'col-span-1 row-span-2', // tall
+  'col-span-1 row-span-1', // small
+  'col-span-2 row-span-1', // wide
+  'col-span-1 row-span-1', // small
+  'col-span-1 row-span-2', // tall
+  'col-span-2 row-span-1', // wide
+  'col-span-1 row-span-1', // small
+  'col-span-1 row-span-1', // small
+  'col-span-2 row-span-2', // large
+]
 
 export default function Gallery() {
   const [activeCategory, setActiveCategory] = useState('All')
   const [selectedImage, setSelectedImage] = useState(null)
   const headerRef = useRef(null)
-  const gridRef = useRef(null)
-  const itemsRef = useRef([])
+  const gridRef   = useRef(null)
   const prefersReducedMotion = useReducedMotion()
 
   const allCategories = ['All', ...galleryCategories]
@@ -36,103 +52,112 @@ export default function Gallery() {
     if (!gridRef.current) return
     const cards = gridRef.current.querySelectorAll('[data-gallery-item]')
     if (prefersReducedMotion) {
-      gsap.set(cards, { clipPath: 'inset(0 0 0% 0)', opacity: 1 })
+      gsap.set(cards, { opacity: 1, scale: 1 })
       return
     }
     gsap.fromTo(
       cards,
-      { clipPath: 'inset(0 0 100% 0)', opacity: 0 },
-      {
-        clipPath: 'inset(0 0 0% 0)',
-        opacity: 1,
-        duration: 0.8,
-        stagger: 0.06,
-        ease: 'power4.out',
-      }
+      { opacity: 0, scale: 0.96 },
+      { opacity: 1, scale: 1, duration: 0.7, stagger: 0.05, ease: 'power3.out' }
     )
   }, [activeCategory, prefersReducedMotion])
 
   const handleNext = useCallback(() => {
     if (!selectedImage) return
     const idx = filteredImages.findIndex((img) => img.id === selectedImage.id)
-    if (idx < filteredImages.length - 1) {
-      setSelectedImage(filteredImages[idx + 1])
-    }
+    if (idx < filteredImages.length - 1) setSelectedImage(filteredImages[idx + 1])
   }, [selectedImage, filteredImages])
 
   const handlePrev = useCallback(() => {
     if (!selectedImage) return
     const idx = filteredImages.findIndex((img) => img.id === selectedImage.id)
-    if (idx > 0) {
-      setSelectedImage(filteredImages[idx - 1])
-    }
+    if (idx > 0) setSelectedImage(filteredImages[idx - 1])
   }, [selectedImage, filteredImages])
 
-  const currentIdx = selectedImage ? filteredImages.findIndex((img) => img.id === selectedImage.id) : -1
+  const currentIdx = selectedImage
+    ? filteredImages.findIndex((img) => img.id === selectedImage.id)
+    : -1
 
   return (
-    <div className="min-h-screen bg-cream-50 pt-32 md:pt-40 pb-24 md:pb-32">
+    <div className="min-h-screen bg-[#fdf8f3] pt-32 md:pt-40 pb-24 md:pb-32">
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
+
+        {/* Header */}
         <div ref={headerRef} className="mb-12">
-          <span className="label-lg text-gold-600 block mb-3">Gallery</span>
-          <h1 className="font-display text-display-xl text-brown-900 font-semibold mb-4">
+          <span className="text-[11px] tracking-[0.22em] uppercase text-[#c9a96e] font-medium block mb-4">
+            Gallery
+          </span>
+          <h1 className="font-serif text-[clamp(2.4rem,5vw,4.5rem)] text-[#1a120b] font-normal leading-[1.05] tracking-[-0.02em] mb-4">
             Moments at Nuur.
           </h1>
-          <p className="text-body-lg text-brown-600 max-w-lg">
-            A visual diary of our space, our craft, and the people who make
-            it all worthwhile.
+          <p className="text-[15px] text-[#6b5744] max-w-md font-light leading-relaxed">
+            A visual diary of our space, our craft, and the people who make it all worthwhile.
           </p>
         </div>
 
+        {/* Filter tabs */}
         <div className="flex gap-2 overflow-x-auto pb-4 mb-10 scrollbar-hide" role="tablist">
           {allCategories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`flex-shrink-0 px-5 py-2.5 rounded-full text-sm font-medium tracking-wide transition-all duration-300 ${
-                activeCategory === cat
-                  ? 'bg-brown-900 text-cream-50'
-                  : 'bg-brown-100 text-brown-600 hover:bg-brown-200'
-              }`}
               role="tab"
               aria-selected={activeCategory === cat}
+              className={`flex-shrink-0 px-5 py-2 rounded-full text-[12px] tracking-[0.08em] uppercase font-medium transition-all duration-300 ${
+                activeCategory === cat
+                  ? 'bg-[#1a120b] text-[#fdf6ee]'
+                  : 'bg-[#1a120b]/8 text-[#6b5744] hover:bg-[#1a120b]/15'
+              }`}
             >
               {cat}
             </button>
           ))}
         </div>
 
+        {/* Masonry-style grid */}
         <div
           ref={gridRef}
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4"
+          className="grid grid-cols-2 md:grid-cols-4 auto-rows-[200px] md:auto-rows-[220px] gap-3 md:gap-4"
           role="tabpanel"
         >
-          {filteredImages.map((img, i) => (
-            <button
-              key={img.id}
-              ref={(el) => (itemsRef.current[i] = el)}
-              data-gallery-item
-              onClick={() => setSelectedImage(img)}
-              className="group relative aspect-[3/4] rounded-xl overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-500"
-              aria-label={`View ${img.alt}`}
-            >
-              <img
-                src={img.src}
-                alt={img.alt}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-brown-950/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                <div className="absolute bottom-3 left-3 right-3">
-                  <p className="text-cream-50 text-sm font-medium">{img.caption}</p>
-                  {img.category && (
-                    <span className="text-cream-300 text-xs">{img.category}</span>
-                  )}
+          {filteredImages.map((img, i) => {
+            const span = activeCategory === 'All'
+              ? (layoutPattern[i % layoutPattern.length] || 'col-span-1 row-span-1')
+              : 'col-span-1 row-span-1'
+
+            return (
+              <button
+                key={img.id}
+                data-gallery-item
+                onClick={() => setSelectedImage(img)}
+                className={`group relative overflow-hidden rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a96e] ${span}`}
+                aria-label={`View ${img.alt}`}
+              >
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  loading="lazy"
+                />
+                {/* Hover overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0e0905]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400">
+                  <div className="absolute bottom-4 left-4 right-4 text-left">
+                    <p className="text-[#fdf6ee] text-sm font-medium leading-tight">{img.caption}</p>
+                    <span className="text-[#c9a96e] text-[11px] tracking-[0.1em] uppercase">{img.category}</span>
+                  </div>
                 </div>
-              </div>
-            </button>
-          ))}
+                {/* Expand icon */}
+                <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                    <polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/>
+                    <line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/>
+                  </svg>
+                </div>
+              </button>
+            )
+          })}
         </div>
+
       </div>
 
       <FullscreenViewer

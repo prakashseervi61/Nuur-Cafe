@@ -9,36 +9,27 @@ import { useReducedMotion } from '../../hooks/useReducedMotion'
 export default function GalleryPreview() {
   const sectionRef = useRef(null)
   const scrollRef = useRef(null)
-  const itemsRef = useRef([])
   const prefersReducedMotion = useReducedMotion()
 
   const previewImages = galleryImages.slice(0, 6)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      if (prefersReducedMotion) {
-        gsap.set(itemsRef.current, { clipPath: 'inset(0 0 0% 0)' })
-        return
-      }
-
-      itemsRef.current.forEach((item) => {
-        if (!item) return
-        gsap.fromTo(
-          item,
-          { clipPath: 'inset(0 0 100% 0)' },
-          {
-            clipPath: 'inset(0 0 0% 0)',
-            duration: 1.2,
-            ease: 'power4.out',
-            scrollTrigger: {
-              trigger: item,
-              start: 'top 85%',
-            },
-          }
-        )
-      })
+      if (prefersReducedMotion) return
+      gsap.fromTo(
+        scrollRef.current,
+        { opacity: 0 },
+        {
+          opacity: 1,
+          duration: 0.8,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 80%',
+          },
+        }
+      )
     }, sectionRef)
-
     return () => ctx.revert()
   }, [prefersReducedMotion])
 
@@ -65,28 +56,33 @@ export default function GalleryPreview() {
         </div>
       </div>
 
-      <div ref={scrollRef} className="overflow-hidden">
-        <div className="flex gap-4 px-6 md:px-12 lg:px-20">
-          {previewImages.map((img, i) => (
+      <div className="relative">
+        <div
+          ref={scrollRef}
+          className="overflow-x-auto scrollbar-hide snap-x snap-mandatory touch-pan-x"
+          aria-label="Nuur gallery preview"
+        >
+          <div className="flex w-max gap-4 pl-6 md:pl-12 lg:pl-20 pr-6 md:pr-12 lg:pr-20">
+          {previewImages.map((img) => (
             <div
               key={img.id}
-              ref={(el) => (itemsRef.current[i] = el)}
-              className="flex-shrink-0 w-[280px] md:w-[360px] aspect-[3/4] rounded-2xl overflow-hidden relative"
-              style={{ clipPath: 'inset(0 0 100% 0)' }}
+              className="flex-shrink-0 w-[78vw] max-w-[360px] md:w-[360px] aspect-[4/5] snap-start rounded-2xl overflow-hidden relative"
             >
               <img
                 src={img.src}
                 alt={img.alt}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-brown-950/60 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500">
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0e0905]/80 via-[#0e0905]/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500">
                 <div className="absolute bottom-4 left-4">
-                  <p className="text-cream-50 font-display text-sm font-medium">{img.caption}</p>
+                  <p className="text-white text-sm font-medium drop-shadow-md">{img.caption}</p>
                 </div>
               </div>
             </div>
           ))}
+          </div>
         </div>
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-[#fdf8f3] to-transparent md:w-20" />
       </div>
     </section>
   )

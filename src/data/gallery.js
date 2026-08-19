@@ -31,7 +31,7 @@ export const galleryImages = [
   },
   {
     id: 5,
-    src: 'https://images.unsplash.com/photo-1555507036-ab1f4038024a?w=1200&h=800&fit=crop',
+    src: 'https://images.unsplash.com/photo-1509365465985-25d11c17e812?w=1200&h=800&fit=crop',
     alt: 'Fresh croissants from the oven',
     caption: 'Baked fresh daily',
     category: 'Food',
