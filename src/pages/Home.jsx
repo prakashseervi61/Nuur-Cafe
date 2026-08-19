@@ -6,7 +6,6 @@ import MenuPreview from '../components/layout/MenuPreview'
 import SeasonalCollection from '../components/layout/SeasonalCollection'
 import GalleryPreview from '../components/layout/GalleryPreview'
 import Testimonials from '../components/layout/Testimonials'
-import VisitUs from '../components/layout/VisitUs'
 
 export default function Home() {
   return (
@@ -19,7 +18,6 @@ export default function Home() {
       <SeasonalCollection />
       <GalleryPreview />
       <Testimonials />
-      <VisitUs />
     </div>
   )
 }

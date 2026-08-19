@@ -134,15 +134,11 @@ export default function Footer() {
               <div>
                 <p className="text-cream-200 font-medium mb-1">Follow</p>
                 <div className="flex gap-4">
-                  <a href={cafe.social.instagram} target="_blank" rel="noopener noreferrer" className="text-cream-400 hover:text-cream-50 transition-colors">
-                    Instagram
-                  </a>
-                  <a href={cafe.social.facebook} target="_blank" rel="noopener noreferrer" className="text-cream-400 hover:text-cream-50 transition-colors">
-                    Facebook
-                  </a>
-                  <a href={cafe.social.tiktok} target="_blank" rel="noopener noreferrer" className="text-cream-400 hover:text-cream-50 transition-colors">
-                    TikTok
-                  </a>
+                  {cafe.social.map((s) => (
+                    <a key={s.platform} href={s.url} target="_blank" rel="noopener noreferrer" className="text-cream-400 hover:text-cream-50 transition-colors capitalize">
+                      {s.platform}
+                    </a>
+                  ))}
                 </div>
               </div>
             </div>
