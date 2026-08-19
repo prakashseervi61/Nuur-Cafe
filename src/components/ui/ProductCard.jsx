@@ -1,10 +1,12 @@
 import { useRef, useEffect } from 'react'
 import { gsap } from 'gsap'
 import { useCart } from '../../context/CartContext'
+import { useToast } from '../../context/ToastContext'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 
 export default function ProductCard({ product, index = 0, onPreview }) {
   const { addItem } = useCart()
+  const showToast = useToast()
   const cardRef = useRef(null)
   const addedRef = useRef(false)
   const prefersReducedMotion = useReducedMotion()
@@ -31,6 +33,7 @@ export default function ProductCard({ product, index = 0, onPreview }) {
   const handleAddToCart = (e) => {
     e.stopPropagation()
     addItem(product)
+    showToast('Added')
 
     if (!prefersReducedMotion && cardRef.current && !addedRef.current) {
       addedRef.current = true
@@ -64,7 +67,7 @@ export default function ProductCard({ product, index = 0, onPreview }) {
           loading="lazy"
         />
         {product.tag && (
-          <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-brown-900/80 text-cream-100 text-[11px] tracking-wider font-medium backdrop-blur-sm">
+          <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-[#1a120b]/80 text-[#fdf6ee] text-[11px] tracking-[0.08em] font-medium backdrop-blur-sm border border-white/10">
             {product.tag}
           </span>
         )}
@@ -83,10 +86,25 @@ export default function ProductCard({ product, index = 0, onPreview }) {
         </p>
         <button
           onClick={handleAddToCart}
-          className="w-full py-2.5 rounded-xl bg-brown-900 text-cream-50 text-sm font-medium tracking-wide hover:bg-brown-800 active:scale-[0.98] transition-all duration-300"
+          className="group/cta flex w-full items-center justify-between gap-3 rounded-xl bg-brown-900 px-4 py-3 text-cream-50 text-sm font-medium tracking-wide shadow-sm shadow-brown-900/15 transition-all duration-300 hover:-translate-y-0.5 hover:bg-gold-600 hover:text-brown-950 hover:shadow-md hover:shadow-gold-600/20 active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
           aria-label={`Add ${product.name} to cart`}
         >
-          Add to Order
+          <span>Add to Order</span>
+          <svg
+            width="15"
+            height="15"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="transition-transform duration-300 group-hover/cta:translate-x-1"
+            aria-hidden="true"
+          >
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
         </button>
       </div>
     </div>

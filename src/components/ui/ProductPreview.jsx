@@ -1,72 +1,53 @@
 import { useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import { gsap } from 'gsap'
 import { useCart } from '../../context/CartContext'
+import { useToast } from '../../context/ToastContext'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 
 export default function ProductPreview({ product, onClose }) {
   const { addItem } = useCart()
+  const showToast = useToast()
   const overlayRef = useRef(null)
   const contentRef = useRef(null)
   const prefersReducedMotion = useReducedMotion()
 
-  useEffect(() => {
-    if (!product) return
-
-    document.body.style.overflow = 'hidden'
-
-    if (prefersReducedMotion) {
-      gsap.set(overlayRef.current, { opacity: 1 })
-      gsap.set(contentRef.current, { y: 0, opacity: 1, scale: 1 })
-
-      const handleEsc = (e) => { if (e.key === 'Escape') handleClose() }
-      window.addEventListener('keydown', handleEsc)
-
-      return () => {
-        document.body.style.overflow = ''
-        window.removeEventListener('keydown', handleEsc)
-      }
-    }
-
-    const tl = gsap.timeline()
-    tl.fromTo(overlayRef.current, { opacity: 0 }, { opacity: 1, duration: 0.3 })
-      .fromTo(
-        contentRef.current,
-        { y: 60, opacity: 0, scale: 0.95 },
-        { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: 'power3.out' },
-        '-=0.15'
-      )
-
-    const handleEsc = (e) => { if (e.key === 'Escape') handleClose() }
-    window.addEventListener('keydown', handleEsc)
-
-    return () => {
-      document.body.style.overflow = ''
-      window.removeEventListener('keydown', handleEsc)
-      tl.kill()
-    }
-  }, [product, prefersReducedMotion])
-
   const handleClose = () => {
-    if (prefersReducedMotion) {
-      onClose()
-      return
-    }
-
-    const tl = gsap.timeline({
-      onComplete: onClose,
-    })
+    if (!contentRef.current || prefersReducedMotion) { onClose(); return }
+    const tl = gsap.timeline({ onComplete: onClose })
     tl.to(contentRef.current, { y: 40, opacity: 0, duration: 0.3, ease: 'power2.in' })
       .to(overlayRef.current, { opacity: 0, duration: 0.25 }, '-=0.1')
   }
 
   const handleAdd = () => {
     addItem(product)
+    showToast('Added')
     handleClose()
   }
 
+  useEffect(() => {
+    if (!product) return
+    document.body.style.overflow = 'hidden'
+    if (!prefersReducedMotion) {
+      const tl = gsap.timeline()
+      tl.fromTo(overlayRef.current, { opacity: 0 }, { opacity: 1, duration: 0.3 })
+        .fromTo(contentRef.current,
+          { y: 60, opacity: 0, scale: 0.95 },
+          { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: 'power3.out' },
+          '-=0.15'
+        )
+    }
+    const handleEsc = (e) => { if (e.key === 'Escape') handleClose() }
+    window.addEventListener('keydown', handleEsc)
+    return () => {
+      document.body.style.overflow = ''
+      window.removeEventListener('keydown', handleEsc)
+    }
+  }, [product])
+
   if (!product) return null
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-[80] flex items-center justify-center p-4 md:p-8">
       <div
         ref={overlayRef}
@@ -75,7 +56,7 @@ export default function ProductPreview({ product, onClose }) {
       />
       <div
         ref={contentRef}
-        className="relative w-full max-w-3xl max-h-[90vh] bg-cream-50 rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row"
+        className="relative w-full max-w-3xl max-h-[90vh] bg-[#fdf8f3] text-[#1a120b] rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row"
       >
         <button
           onClick={handleClose}
@@ -96,7 +77,7 @@ export default function ProductPreview({ product, onClose }) {
           />
         </div>
 
-        <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col">
+        <div className="w-full md:w-1/2 bg-[#fdf8f3] p-6 md:p-8 flex flex-col overflow-y-auto">
           {product.tag && (
             <span className="label-sm text-gold-600 block mb-2">{product.tag}</span>
           )}
@@ -129,13 +110,31 @@ export default function ProductPreview({ product, onClose }) {
           <div className="mt-auto">
             <button
               onClick={handleAdd}
-              className="w-full py-3.5 rounded-full bg-brown-900 text-cream-50 font-medium tracking-wide hover:bg-brown-800 active:scale-[0.98] transition-all duration-300"
+              className="group flex w-full items-center justify-between gap-4 rounded-xl bg-brown-900 px-5 py-4 text-left text-cream-50 shadow-lg shadow-brown-900/15 transition-all duration-300 hover:-translate-y-0.5 hover:bg-gold-600 hover:text-brown-950 hover:shadow-xl hover:shadow-gold-600/20 active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-50"
             >
-              Add to Order — €{product.price.toFixed(2)}
+              <span className="font-medium tracking-wide">Add to Order</span>
+              <span className="flex items-center gap-3 font-display text-sm font-semibold whitespace-nowrap">
+                €{product.price.toFixed(2)}
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="transition-transform duration-300 group-hover:translate-x-1"
+                  aria-hidden="true"
+                >
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </span>
             </button>
           </div>
         </div>
       </div>
     </div>
-  )
+  , document.body)
 }
