@@ -56,18 +56,24 @@ export default function AboutHero() {
           className="w-full h-full object-cover"
           style={{ clipPath: 'inset(0 0 100% 0)' }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-brown-950/90 via-brown-950/50 to-brown-950/60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#110d08]/95 via-[#1a120b]/55 to-[#1a120b]/45" />
       </div>
 
-      <div ref={textRef} className="relative z-10 h-full flex flex-col justify-end pb-24 md:pb-32 px-6 md:px-12 lg:px-20 max-w-7xl mx-auto">
-        <span className="label-lg text-gold-400 mb-4 block">About Nuur</span>
-        <h1 className="font-display text-display-xl md:text-display-2xl text-cream-50 font-semibold leading-[0.95] mb-6">
-          Our story<br />begins with<br />a single cup.
-        </h1>
-        <p className="text-body-lg text-cream-300 max-w-lg">
-          From a coffee cart on Prinsengracht to one of Amsterdam's most
-          beloved craft coffeehouses. This is the journey of Nuur.
-        </p>
+      <div ref={textRef} className="relative z-20 mx-auto flex h-full w-full max-w-7xl flex-col justify-end px-6 pb-20 md:px-12 md:pb-28 lg:px-20 lg:pb-32">
+        <div className="grid items-end gap-8 md:grid-cols-[1.25fr_0.75fr] md:gap-16 lg:gap-24">
+          <div>
+            <span className="mb-5 block font-body text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-[#f5c96b] md:text-xs">
+              About Nuur
+            </span>
+            <h1 className="max-w-3xl font-serif text-[clamp(2.75rem,6vw,5.5rem)] font-medium leading-[0.94] tracking-normal text-[#fdf8f3] drop-shadow-lg">
+              Our story<br />begins with<br />a single cup.
+            </h1>
+          </div>
+          <p className="max-w-lg border-l border-[#f5c96b]/60 pl-5 font-body text-[clamp(0.95rem,1.3vw,1.1rem)] leading-[1.6] text-[#eee4d7] drop-shadow-md md:mb-1 md:pl-7">
+            From a coffee cart on Prinsengracht to one of Amsterdam's most
+            beloved craft coffeehouses. This is the journey of Nuur.
+          </p>
+        </div>
       </div>
     </section>
   )
