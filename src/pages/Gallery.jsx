@@ -1,27 +1,11 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { galleryImages, galleryCategories } from '../data/gallery'
+import { galleryImages, galleryCategories, galleryFallbackImage } from '../data/gallery'
 import FullscreenViewer from '../components/ui/FullscreenViewer'
 import { useReducedMotion } from '../hooks/useReducedMotion'
 
 gsap.registerPlugin(ScrollTrigger)
-
-// Assign layout spans to create visual rhythm
-const layoutPattern = [
-  'col-span-2 row-span-2', // large
-  'col-span-1 row-span-1', // small
-  'col-span-1 row-span-1', // small
-  'col-span-1 row-span-2', // tall
-  'col-span-1 row-span-1', // small
-  'col-span-2 row-span-1', // wide
-  'col-span-1 row-span-1', // small
-  'col-span-1 row-span-2', // tall
-  'col-span-2 row-span-1', // wide
-  'col-span-1 row-span-1', // small
-  'col-span-1 row-span-1', // small
-  'col-span-2 row-span-2', // large
-]
 
 export default function Gallery() {
   const [activeCategory, setActiveCategory] = useState('All')
@@ -114,28 +98,34 @@ export default function Gallery() {
           ))}
         </div>
 
-        {/* Masonry-style grid */}
+        {/* Masonry gallery */}
         <div
           ref={gridRef}
-          className="grid grid-cols-2 md:grid-cols-4 auto-rows-[200px] md:auto-rows-[220px] gap-3 md:gap-4"
+          className="columns-1 gap-3 md:columns-2 md:gap-4 xl:columns-3"
           role="tabpanel"
         >
           {filteredImages.map((img, i) => {
-            const span = activeCategory === 'All'
-              ? (layoutPattern[i % layoutPattern.length] || 'col-span-1 row-span-1')
-              : 'col-span-1 row-span-1'
+            const aspect = i % 5 === 0
+              ? 'aspect-[4/5]'
+              : i % 3 === 0
+                ? 'aspect-[16/10]'
+                : 'aspect-[3/4]'
 
             return (
               <button
                 key={img.id}
                 data-gallery-item
                 onClick={() => setSelectedImage(img)}
-                className={`group relative overflow-hidden rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a96e] ${span}`}
+                className={`group relative mb-3 block w-full break-inside-avoid overflow-hidden rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a96e] md:mb-4 ${aspect}`}
                 aria-label={`View ${img.alt}`}
               >
                 <img
                   src={img.src}
                   alt={img.alt}
+                  onError={(event) => {
+                    event.currentTarget.onerror = null
+                    event.currentTarget.src = galleryFallbackImage
+                  }}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                   loading="lazy"
                 />

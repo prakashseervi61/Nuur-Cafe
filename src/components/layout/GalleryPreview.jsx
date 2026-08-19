@@ -2,7 +2,7 @@ import { useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { galleryImages } from '../../data/gallery'
+import { galleryImages, galleryFallbackImage } from '../../data/gallery'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 
 
@@ -71,6 +71,10 @@ export default function GalleryPreview() {
               <img
                 src={img.src}
                 alt={img.alt}
+                onError={(event) => {
+                  event.currentTarget.onerror = null
+                  event.currentTarget.src = galleryFallbackImage
+                }}
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0e0905]/80 via-[#0e0905]/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500">

@@ -1,4 +1,5 @@
 export const galleryCategories = ['Interior', 'Coffee', 'Food', 'People']
+export const galleryFallbackImage = '/hero-images/02-cafe-interior.jpg'
 
 export const galleryImages = [
   {
@@ -52,7 +53,7 @@ export const galleryImages = [
   },
   {
     id: 8,
-    src: 'https://images.unsplash.com/photo-1507226983735-a83d43e3b1f3?w=1200&h=800&fit=crop',
+    src: '/hero-images/02-cafe-interior.jpg',
     alt: 'Cafe terrace on a sunny day',
     caption: 'Prinsengracht terrace',
     category: 'Interior',
@@ -66,7 +67,7 @@ export const galleryImages = [
   },
   {
     id: 10,
-    src: 'https://images.unsplash.com/photo-1470324161839-ce2bb6f9d58b?w=1200&h=800&fit=crop',
+    src: '/hero-images/05-overhead.jpg',
     alt: 'Pastry display case',
     caption: 'Morning selection',
     category: 'Food',
@@ -84,5 +85,61 @@ export const galleryImages = [
     alt: 'Cafe ambiance at golden hour',
     caption: 'Golden hour',
     category: 'Interior',
+  },
+  {
+    id: 13,
+    src: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200&h=800&fit=crop',
+    alt: 'Nuur cafe tables and seating',
+    caption: 'A place to linger',
+    category: 'Interior',
+  },
+  {
+    id: 14,
+    src: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=1200&h=800&fit=crop',
+    alt: 'Fresh coffee beside a notebook',
+    caption: 'Daily ritual',
+    category: 'Coffee',
+  },
+  {
+    id: 15,
+    src: 'https://images.unsplash.com/photo-1498804103079-a6351b050096?w=1200&h=800&fit=crop',
+    alt: 'Coffee beans ready for brewing',
+    caption: 'The bean selection',
+    category: 'Coffee',
+  },
+  {
+    id: 16,
+    src: 'https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?w=1200&h=800&fit=crop',
+    alt: 'Fresh pastry and coffee on a table',
+    caption: 'Made for mornings',
+    category: 'Food',
+  },
+  {
+    id: 17,
+    src: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&h=800&fit=crop',
+    alt: 'Barista preparing a coffee order',
+    caption: 'In good hands',
+    category: 'People',
+  },
+  {
+    id: 18,
+    src: 'https://images.unsplash.com/photo-1511081692775-05d0f180a065?w=1200&h=800&fit=crop',
+    alt: 'Latte on a cafe counter',
+    caption: 'A warm welcome',
+    category: 'Coffee',
+  },
+  {
+    id: 19,
+    src: 'https://images.unsplash.com/photo-1547592180-85f173990554?w=1200&h=800&fit=crop',
+    alt: 'Freshly prepared brunch plate',
+    caption: 'From the kitchen',
+    category: 'Food',
+  },
+  {
+    id: 20,
+    src: 'https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=1200&h=800&fit=crop',
+    alt: 'People enjoying a quiet cafe afternoon',
+    caption: 'The Nuur feeling',
+    category: 'People',
   },
 ]

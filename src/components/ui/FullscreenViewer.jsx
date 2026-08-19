@@ -1,6 +1,7 @@
 import { useEffect, useRef, useCallback } from 'react'
 import { gsap } from 'gsap'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
+import { galleryFallbackImage } from '../../data/gallery'
 
 export default function FullscreenViewer({ image, onClose, onNext, onPrev, hasNext, hasPrev, currentIndex, totalCount }) {
   const overlayRef = useRef(null)
@@ -112,6 +113,10 @@ export default function FullscreenViewer({ image, onClose, onNext, onPrev, hasNe
           <img
             src={image.src}
             alt={image.alt}
+            onError={(event) => {
+              event.currentTarget.onerror = null
+              event.currentTarget.src = galleryFallbackImage
+            }}
             className="w-full h-full object-contain rounded-lg"
           />
           <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-brown-950/80 to-transparent rounded-b-lg">
